@@ -28,8 +28,8 @@ for (const singleProductCard of singleProductCards) {
 
       const cartPreviousPrice = priceFloter("total-price");
 
-      const totalPrice = price + cartPreviousPrice;
-      updatePrice("total-price", totalPrice);
+      const totalPrice =( price + cartPreviousPrice).toFixed(2);
+      updatePrice("total-price", totalPrice)
       updatePrice('rest-total', totalPrice)
       totalPriceCalculation();
 
@@ -104,4 +104,19 @@ document.getElementById('coupon-code-btn').addEventListener('click',function(){
         
         
         }
+})
+
+document.getElementById('home-btn').addEventListener('click',function(){
+  const cartProductParent = document.getElementById("added-items");
+  console.log(cartProductParent);
+
+   const value= '00.00';
+   updatePrice('total-price', value)
+   updatePrice('discount-price' ,value);
+   updatePrice('rest-total',value);
+   
+    for(const item of cartProductParent){
+      item.remove();
+    }
+
 })
