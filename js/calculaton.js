@@ -1,25 +1,8 @@
-function priceFloter(priceId) {
-  const totalPrice = document.getElementById(priceId).innerText;
-
-  const price = parseFloat(totalPrice);
-
-  return price;
-}
-
-//  update price
-function updatePrice(priceSelector, total) {
-  let priceElement = document.getElementById(priceSelector);
-  console.log(priceElement);
-  priceElement.innerText = total;
-}
-
 const singleProductCards = document.getElementsByClassName("card");
 for (const singleProductCard of singleProductCards) {
   const productHandle = singleProductCard.addEventListener(
     "click",
     function (event) {
-      console.log(event);
-
       const priceText = event.target
         .closest(".card")
         .querySelector(".card-actions")
@@ -28,12 +11,12 @@ for (const singleProductCard of singleProductCards) {
 
       const cartPreviousPrice = priceFloter("total-price");
 
-      const totalPrice =( price + cartPreviousPrice).toFixed(2);
-      updatePrice("total-price", totalPrice)
-      updatePrice('rest-total', totalPrice)
+      const totalPrice = (price + cartPreviousPrice).toFixed(2);
+      updatePrice("total-price", totalPrice);
+      updatePrice("rest-total", totalPrice);
       totalPriceCalculation();
 
-      //   p element create
+    
       const parent = document.getElementById("added-items");
       const productTitle = event.target
         .closest(".card")
@@ -51,80 +34,42 @@ for (const singleProductCard of singleProductCards) {
   );
 }
 
-function totalPriceCalculation() {
+
+document.getElementById("coupon-value").addEventListener("keyup", function () {
   const totalPrice = priceFloter("total-price");
 
-  if (totalPrice >= 0) {
-    const purchaseBtn = document
-      .getElementById("purchase-btn")
-      .removeAttribute("disabled");
+  const couponBtn = document.getElementById("coupon-code-btn");
+  const couponField = document.getElementById("coupon-value");
+  if (totalPrice >= 200 && couponField.value === "SELL200") {
+    couponBtn.removeAttribute("disabled");
+  } else {
+    couponBtn.setAttribute("disabled", true);
   }
-}
+});
 
-// function discountCalculation() {
-//   const couponField = document.getElementById("coupon-value");
-//   const couponBtn = document.getElementById("coupon-code-btn");
-//   console.log(couponBtn, couponField);
-
-//   couponField.addEventListener("input", function () {
-//     if (couponField.value.trim === "SELL200") {
-//       couponBtn.removeAttributeNS("disabled");
-//     } else {
-//       couponBtn.setAttribute("disabled", disabled);
-//     }
-//   });
-// }
-
-document.getElementById("coupon-value").addEventListener('keyup',function(){
+document
+  .getElementById("coupon-code-btn")
+  .addEventListener("click", function () {
     const totalPrice = priceFloter("total-price");
+    const restTotal = priceFloter("rest-total");
 
-    const couponBtn = document.getElementById("coupon-code-btn");
-    const couponField=document.getElementById("coupon-value");
-    if (totalPrice>=200 && couponField.value === 'SELL200' ) {
-      
-            couponBtn.removeAttribute("disabled")
+    const couponField = document.getElementById("coupon-value");
+    if (totalPrice >= 200 && couponField.value === "SELL200") {
+      const discount = (totalPrice * 0.2).toFixed(2);
+      const restTotal = (totalPrice - discount).toFixed(2);
+
+      updatePrice("rest-total", restTotal);
+      updatePrice("discount-price", discount);
     }
-    else{
-         couponBtn.setAttribute('disabled',true)
-    }
-})
-
-document.getElementById('coupon-code-btn').addEventListener('click',function(){
-    const totalPrice = priceFloter("total-price")
-    const restTotal= priceFloter('rest-total');
-  
-    const couponField=document.getElementById("coupon-value");
-    if (totalPrice>=200 && couponField.value === 'SELL200' ) {
-      
-         const discount= (totalPrice * 0.2).toFixed(2)
-         const restTotal= ( totalPrice- discount).toFixed(2)
-         
-         updatePrice('rest-total',restTotal);
-         updatePrice('discount-price',discount)
-        
-        
-        }
-})
-
-// clEAR CART
-function cartClear() {
-  const addedItems= document.getElementById('added-items')
-  while (addedItems.nextElementSibling) {
-    addedItems.removeChild(addedItems.firstChild);
-  }
- }
+  });
 
 
 
-document.getElementById('home-btn').addEventListener('click',function(){
+document.getElementById("home-btn").addEventListener("click", function () {
+  const value = "00.00";
+  updatePrice("total-price", value);
+  updatePrice("discount-price", value);
+  updatePrice("rest-total", value);
 
-
-
-   const value= '00.00';
-   updatePrice('total-price', value)
-   updatePrice('discount-price' ,value);
-   updatePrice('rest-total',value);
-   
-   cartClear();
-
-})
+  cartClear();
+});
