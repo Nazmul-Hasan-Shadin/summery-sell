@@ -106,17 +106,25 @@ document.getElementById('coupon-code-btn').addEventListener('click',function(){
         }
 })
 
+// clEAR CART
+function cartClear() {
+  const addedItems= document.getElementById('added-items')
+  while (addedItems.nextElementSibling) {
+    addedItems.removeChild(addedItems.firstChild);
+  }
+ }
+
+
+
 document.getElementById('home-btn').addEventListener('click',function(){
-  const cartProductParent = document.getElementById("added-items");
-  console.log(cartProductParent);
+
+
 
    const value= '00.00';
    updatePrice('total-price', value)
    updatePrice('discount-price' ,value);
    updatePrice('rest-total',value);
    
-    for(const item of cartProductParent){
-      item.remove();
-    }
+   cartClear();
 
 })
