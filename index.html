@@ -152,13 +152,15 @@
              <!-- cart items -->
 
             <div class="bg-white flex lg:items-center  justify-center   ">
-              <div class=" py-5 w-full pl-5   " >
-                <h3 class="text-2xl font-medium">Have coupon?</h3>
-               <div class="flex">
-                <input id="Coupon-code" type="text" placeholder="Coupon code" class="input input-bordered  " />
-                <button class="btn bg-mainBtn text-white absolute right-24 border-l-0 rounded-l" disabled> Apply</button>
-               </div>
-             </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text font-medium text-2xl">Have coupon?</span>
+                </label>
+                <label class="input-group">
+                  <input id="coupon-value" type="text" placeholder="Coupon code" class="input input-bordered" />
+                  <button id="coupon-code-btn"  class="font-normal btn bg-mainBtn text-white text-lg" disabled >Apply</button>
+                </label>
+              </div>
             </div>
             
    
@@ -169,10 +171,12 @@
 
               </div>
 
+               <hr class="bordet-t border-[gray] px-2">
+
                 <p class="font-medium text-2xl">Total Price: <span id="total-price" class="text-[#11111180]">00.00</span> <span class="text-[#11111180]">tk</span></p>
                 <p  class="font-medium text-2xl">Discount : <span class="text-[#11111180]" id="discount-price">00.00</span > <span class="text-[#11111180]">tk</span> </p>
                 <p  class="font-medium text-2xl">Total : <span class="text-[#11111180]" id="rest-total">00.00</span> <span class="text-[#11111180]">tk</span></p>
-                <button class="btn bg-mainBtn text-white w-full relative top-11 -left-2 " disabled>Make Purchase</button>
+                <button id="purchase-btn" class="btn bg-mainBtn text-white w-full relative top-11 -left-2 " disabled>Make Purchase</button>
 
              </div>
 

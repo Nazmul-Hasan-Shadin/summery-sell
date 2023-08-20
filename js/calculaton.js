@@ -1,4 +1,4 @@
-function cartPriceValue(priceId) {
+function priceFloter(priceId) {
   const totalPrice = document.getElementById(priceId).innerText;
 
   const price = parseFloat(totalPrice);
@@ -13,8 +13,6 @@ function updatePrice(priceSelector, total) {
   priceElement.innerText = total;
 }
 
-
-
 const singleProductCards = document.getElementsByClassName("card");
 for (const singleProductCard of singleProductCards) {
   const productHandle = singleProductCard.addEventListener(
@@ -28,19 +26,82 @@ for (const singleProductCard of singleProductCards) {
         .querySelector("small").innerText;
       const price = parseFloat(priceText);
 
-      const cartPreviousPrice = cartPriceValue("total-price");
+      const cartPreviousPrice = priceFloter("total-price");
 
       const totalPrice = price + cartPreviousPrice;
+      updatePrice("total-price", totalPrice);
+      updatePrice('rest-total', totalPrice)
+      totalPriceCalculation();
+
+      //   p element create
       const parent = document.getElementById("added-items");
       const productTitle = event.target
         .closest(".card")
         .querySelector(".card-body h2").innerText;
 
       const p = document.createElement("p");
-      p.classList.add('text-2xl')
-      p.innerText = productTitle;
+
+      p.classList.add("text-2xl", "font-medium", "my-3");
+
+      const numberOfChildElements = parent.querySelectorAll("p").length + 1;
+      p.innerText = `${numberOfChildElements}. ${productTitle}`;
+
       parent.appendChild(p);
-      updatePrice("total-price", totalPrice);
     }
   );
 }
+
+function totalPriceCalculation() {
+  const totalPrice = priceFloter("total-price");
+
+  if (totalPrice >= 0) {
+    const purchaseBtn = document
+      .getElementById("purchase-btn")
+      .removeAttribute("disabled");
+  }
+}
+
+// function discountCalculation() {
+//   const couponField = document.getElementById("coupon-value");
+//   const couponBtn = document.getElementById("coupon-code-btn");
+//   console.log(couponBtn, couponField);
+
+//   couponField.addEventListener("input", function () {
+//     if (couponField.value.trim === "SELL200") {
+//       couponBtn.removeAttributeNS("disabled");
+//     } else {
+//       couponBtn.setAttribute("disabled", disabled);
+//     }
+//   });
+// }
+
+document.getElementById("coupon-value").addEventListener('keyup',function(){
+    const totalPrice = priceFloter("total-price");
+
+    const couponBtn = document.getElementById("coupon-code-btn");
+    const couponField=document.getElementById("coupon-value");
+    if (totalPrice>=200 && couponField.value === 'SELL200' ) {
+      
+            couponBtn.removeAttribute("disabled")
+    }
+    else{
+         couponBtn.setAttribute('disabled',true)
+    }
+})
+
+document.getElementById('coupon-code-btn').addEventListener('click',function(){
+    const totalPrice = priceFloter("total-price")
+    const restTotal= priceFloter('rest-total');
+  
+    const couponField=document.getElementById("coupon-value");
+    if (totalPrice>=200 && couponField.value === 'SELL200' ) {
+      
+         const discount= (totalPrice * 0.2).toFixed(2)
+         const restTotal= ( totalPrice- discount).toFixed(2)
+         
+         updatePrice('rest-total',restTotal);
+         updatePrice('discount-price',discount)
+        
+        
+        }
+})
