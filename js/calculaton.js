@@ -12,6 +12,8 @@ for (const singleProductCard of singleProductCards) {
       const cartPreviousPrice = priceFloter("total-price");
 
       const totalPrice = (price + cartPreviousPrice).toFixed(2);
+      const hrTag= document.querySelector('hr');
+       hrTag.classList.remove('hidden');
       updatePrice("total-price", totalPrice);
       updatePrice("rest-total", totalPrice);
       totalPriceCalculation();
@@ -47,6 +49,8 @@ document.getElementById("coupon-value").addEventListener("keyup", function () {
   }
 });
 
+
+// cuppon-code-btn  APPLY BTN
 document
   .getElementById("coupon-code-btn")
   .addEventListener("click", function () {
@@ -63,7 +67,7 @@ document
     }
   });
 
-
+  //after click home button all data cleared
 
 document.getElementById("home-btn").addEventListener("click", function () {
   const value = "00.00";
